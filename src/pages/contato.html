@@ -1,0 +1,53 @@
+<!--{"title":"Contato - Sistema Pax Cristo Rei","description":"Entre em contato com o Sistema Pax Cristo Rei. Toledo/PR: (45) 3054-8785 - Rua Souza Naves, 88, Sala A Centro. Guarapuava/PR: (42) 3627-2673 - Rua Andrade Neves, 1717, Trianon, Sala 02.","path":"contato/","og_image":"logotopo_2.webp"}-->
+<section class="hero hero-contato">
+  <div class="container hero-inner">
+    <div class="form-card">
+      <h1>Preencha o formulário</h1>
+      <form class="contact-form" id="contact-form" novalidate>
+        <label class="sr-only" for="f-nome">Nome</label>
+        <input id="f-nome" type="text" name="nome" placeholder="Seu nome" autocomplete="name">
+        <label class="sr-only" for="f-email">Email</label>
+        <input id="f-email" type="email" name="email" placeholder="E-mail" required autocomplete="email">
+        <label class="sr-only" for="f-cidade">Cidade</label>
+        <input id="f-cidade" type="text" name="cidade" placeholder="Cidade/UF" required>
+        <label class="sr-only" for="f-telefone">Telefone</label>
+        <input id="f-telefone" type="tel" name="telefone" placeholder="Telefone" required autocomplete="tel">
+        <label class="sr-only" for="f-mensagem">Mensagem</label>
+        <textarea id="f-mensagem" name="mensagem" rows="4" placeholder="Mensagem"></textarea>
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" class="btn-submit">Enviar mensagem</button>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+  {{shape_asym}}
+</section>
+
+<section class="contato-unidades">
+  <div class="container contato-row">
+    <div class="contato-col">
+      <h2>Toledo/PR e Região</h2>
+      <ul class="icon-list icon-list-dark">
+        <li><a href="tel:+554530548785"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true"><use href="#i-phone"/></svg><span>(45) 3054-8785</span></a></li>
+        <li><a href="https://wa.me/554530548785" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>(45) 3054-8785</span></a></li>
+        <li><svg class="ico" viewBox="0 0 384 512" aria-hidden="true"><use href="#i-pin"/></svg><span>Rua Souza Naves, 88, Sala A Centro</span></li>
+      </ul>
+      <div class="map">
+        <iframe loading="lazy" src="https://maps.google.com/maps?q=Rua%20Souza%20Naves%2C%2088%2C%20Sala%20A%20Centro%2C%20Toledo%20-%20PR&amp;t=m&amp;z=13&amp;output=embed&amp;iwloc=near" title="Rua Souza Naves, 88, Sala A Centro, Toledo - PR" aria-label="Rua Souza Naves, 88, Sala A Centro, Toledo - PR"></iframe>
+      </div>
+    </div>
+    <div class="contato-col">
+      <h2>Guarapuava/PR e Região</h2>
+      <ul class="icon-list icon-list-dark">
+        <li><a href="tel:+554236272673"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true"><use href="#i-phone"/></svg><span>(42) 3627-2673</span></a></li>
+        <li><a href="https://wa.me/554236272673" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 512 512" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>(42) 3627-2673</span></a></li>
+        <li><svg class="ico" viewBox="0 0 384 512" aria-hidden="true"><use href="#i-pin"/></svg><span>Rua Andrade Neves, 1717, Trianon, Sala 02</span></li>
+      </ul>
+      <div class="map">
+        <iframe loading="lazy" src="https://maps.google.com/maps?q=Rua%20Andrade%20Neves%2C%201717%2C%20Trianon&amp;t=m&amp;z=13&amp;output=embed&amp;iwloc=near" title="Rua Andrade Neves, 1717, Trianon, Guarapuava - PR" aria-label="Rua Andrade Neves, 1717, Trianon, Guarapuava - PR"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{cta}}

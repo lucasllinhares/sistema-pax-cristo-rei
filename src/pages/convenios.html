@@ -1,0 +1,47 @@
+<!--{"title":"Convênios - Sistema Pax Cristo Rei","description":"Conheça os convênios do Sistema Pax Cristo Rei em Toledo/PR e Guarapuava/PR: mais de 100 empresas com descontos em comércio, consultas e exames para associados.","path":"convenios/","og_image":"group_22-1.webp"}-->
+<section class="hero hero-convenios">
+  <div class="container hero-inner">
+    <div class="hero-text">
+      <h1>Convênios</h1>
+      <p>Desfrute de mais benefícios que o Sistema Pax Cristo Rei tem a oferecer! São mais de 100 empresas conveniadas que vão desde descontos no comércio em geral, até descontos incríveis em consultas e exames.</p>
+    </div>
+    <a class="btn btn-orange btn-grow hero-btn" href="{{whatsapp}}" target="_blank" rel="noopener">Falar com Consultor</a>
+  </div>
+  {{shape_asym}}
+</section>
+
+<section class="section convenios-sec">
+  <div class="container col-center">
+    <div class="section-head">
+      <h2>Nossos Convênios</h2>
+    </div>
+    <div class="tabs" data-tabs>
+      <div class="tab-list" role="tablist" aria-label="Convênios por região">
+        <button type="button" role="tab" id="tab-toledo" aria-controls="panel-toledo" aria-selected="true">Toledo/PR e Região</button>
+        <button type="button" role="tab" id="tab-guarapuava" aria-controls="panel-guarapuava" aria-selected="false" tabindex="-1">Guarapuava/PR e Região</button>
+      </div>
+
+      <!--
+        Para cadastrar convênios, adicione um <li> por empresa dentro da lista da região:
+        <li class="conv-item"><strong>Nome da empresa</strong><span>Segmento / desconto</span></li>
+        Quando a lista tiver itens, a mensagem "lista em atualização" some automaticamente.
+      -->
+      <div class="tab-panel" role="tabpanel" id="panel-toledo" aria-labelledby="tab-toledo">
+        <ul class="conv-list"></ul>
+        <div class="conv-empty">
+          <p>A lista completa de empresas conveniadas em Toledo/PR e região está sendo atualizada. Fale com um de nossos consultores para conhecer todos os descontos disponíveis para associados.</p>
+          <a class="btn btn-green btn-grow" href="https://wa.me/554530548785?text=Ol%C3%A1%2C%20gostaria%20de%20conhecer%20os%20conv%C3%AAnios%20de%20Toledo." target="_blank" rel="noopener">Consultar convênios de Toledo</a>
+        </div>
+      </div>
+      <div class="tab-panel" role="tabpanel" id="panel-guarapuava" aria-labelledby="tab-guarapuava" hidden>
+        <ul class="conv-list"></ul>
+        <div class="conv-empty">
+          <p>A lista completa de empresas conveniadas em Guarapuava/PR e região está sendo atualizada. Fale com um de nossos consultores para conhecer todos os descontos disponíveis para associados.</p>
+          <a class="btn btn-green btn-grow" href="https://wa.me/554236272673?text=Ol%C3%A1%2C%20gostaria%20de%20conhecer%20os%20conv%C3%AAnios%20de%20Guarapuava." target="_blank" rel="noopener">Consultar convênios de Guarapuava</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{cta}}
