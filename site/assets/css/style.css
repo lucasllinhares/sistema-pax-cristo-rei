@@ -401,13 +401,17 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
 .tab-list button:hover { background: #e7f5ec; }
 .tab-list button[aria-selected="true"] { background: var(--primary); color: var(--cream); }
 .tab-panel { background: var(--white); border-radius: 25px; padding: 40px; box-shadow: var(--shadow-card); color: var(--text); }
-.conv-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-.conv-list:empty { display: none; }
-.conv-item { display: flex; flex-direction: column; gap: 4px; padding: 16px 20px; border-radius: 12px; background: var(--cream); }
-.conv-item strong { font-weight: 700; color: var(--secondary); }
-.conv-item span { font-size: .95em; }
-.conv-empty { display: flex; flex-direction: column; align-items: center; gap: 25px; text-align: center; font-size: 1.1em; line-height: 1.4; }
-.conv-list:not(:empty) + .conv-empty { display: none; }
+/* Grade de logos dos parceiros conveniados, por região (aba) */
+.conv-grid {
+  list-style: none; margin: 0; padding: 0; display: grid;
+  grid-template-columns: repeat(5, 1fr); gap: 25px;
+}
+.conv-logo {
+  aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden; background: var(--white);
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .18); transition: transform .3s, box-shadow .3s;
+}
+.conv-logo:hover { transform: translateY(-4px); box-shadow: 0 12px 22px -10px rgba(0, 0, 0, .28); }
+.conv-logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
 /* ==========================================================================
    Política
@@ -789,7 +793,9 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
   .video-short { width: 100%; max-width: 360px; }
 
   .tab-panel { padding: 25px; }
+  .conv-grid { gap: 20px; }
   .tab-list button { width: 100%; }
+  .conv-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; }
 
   .policy-sec { padding: 50px 20px 70px; }
   .policy h1 { font-size: 1.8em; }
