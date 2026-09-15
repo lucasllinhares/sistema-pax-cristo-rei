@@ -135,7 +135,6 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
 .hero-planos { background-image: url(../img/ses-1-desktop.webp); }
 .hero-sobre { background-image: url(../img/ses-1-desktop-4.webp); }
 .hero-contato { background-image: url(../img/ses-1-desktop-3.webp); min-height: 600px; padding-top: 120px; }
-.hero-convenios { background-image: url(../img/ses-1-desktop-3.webp); }
 .hero-inner { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; z-index: 3; }
 .hero-text { width: 491px; max-width: 100%; margin-top: 30px; }
 .hero-text h1 { font-size: 2.9em; font-weight: 700; color: var(--white); margin-bottom: .5rem; }
@@ -392,6 +391,7 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
    Convênios
    ========================================================================== */
 .convenios-sec { padding-top: 90px; }
+.page-title { margin-bottom: 28px; font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 700; text-align: center; color: var(--text); }
 .tabs { width: 1000px; max-width: 100%; }
 .tab-list { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 25px; }
 .tab-list button {
@@ -407,7 +407,7 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
   grid-template-columns: repeat(5, 1fr); gap: 25px;
 }
 .conv-logo {
-  aspect-ratio: 1 / 1; border-radius: 14px; overflow: hidden; background: var(--white);
+  aspect-ratio: 1 / 1; border-radius: 50%; overflow: hidden; background: var(--white);
   box-shadow: 0 6px 16px -8px rgba(0, 0, 0, .18); transition: transform .3s, box-shadow .3s;
 }
 .conv-logo:hover { transform: translateY(-4px); box-shadow: 0 12px 22px -10px rgba(0, 0, 0, .28); }
@@ -484,7 +484,7 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
   .hero-home { background-image: url(../img/ses-1-desktop-1-1536x562.webp); }
   .hero-planos { background-image: url(../img/ses-1-desktop-1536x562.webp); }
   .hero-sobre { background-image: url(../img/ses-1-desktop-4-1536x562.webp); }
-  .hero-contato, .hero-convenios { background-image: url(../img/ses-1-desktop-3-1536x535.webp); }
+  .hero-contato { background-image: url(../img/ses-1-desktop-3-1536x535.webp); }
   .hero-text { width: 439px; }
   .hero-text h1 { font-size: 2.5em; }
   .hero-home .hero-btn { width: 407px; }
@@ -546,7 +546,7 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
   .hero-home { background-image: url(../img/ses-1-desktop-1-1024x375.webp); }
   .hero-planos { background-image: url(../img/ses-1-desktop-1024x375.webp); }
   .hero-sobre { background-image: url(../img/ses-1-desktop-4-1024x375.webp); }
-  .hero-contato, .hero-convenios { background-image: url(../img/ses-1-desktop-3-1024x356.webp); }
+  .hero-contato { background-image: url(../img/ses-1-desktop-3-1024x356.webp); }
   .home-beneficios::before { background-image: url(../img/bg-1024x683.webp); }
   .hero-planos { min-height: 647px; }
   .hero-text { width: 351px; }
@@ -614,7 +614,7 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
   .hero-home { background-image: url(../img/ses-1-tablet.webp); }
   .hero-planos { background-image: url(../img/ses-1-tablet-1.webp); }
   .hero-sobre { background-image: url(../img/ses-1-tablet-3.webp); }
-  .hero-contato, .hero-convenios { background-image: url(../img/ses-1-tablet-2-768x932.webp); }
+  .hero-contato { background-image: url(../img/ses-1-tablet-2-768x932.webp); }
   .hero-inner { align-items: center; }
   .hero-text, .hero-sobre .hero-text { width: 549px; text-align: center; }
   .hero-planos .hero-text { width: 601px; margin-top: 10px; }
@@ -704,11 +704,13 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
   .main-nav li { margin: 0 6px; }
   .main-nav a { padding: 0 4px; }
 
-  .hero { margin-top: -174px; padding: 122px 20px 300px; }
+  /* No celular o fundo fica parado (sem parallax) — a foto é retrato e mostra
+     pessoas perto do topo; deslocar o fundo ao rolar cortava a cabeça delas. */
+  .hero { margin-top: -174px; padding: 122px 20px 300px; background-position: center center !important; }
   .hero-home { background-image: url(../img/ses-1-mobile.webp); }
   .hero-planos { background-image: url(../img/ses-1-mobile-1.webp); }
   .hero-sobre { background-image: url(../img/ses-1-mobile-3.webp); }
-  .hero-contato, .hero-convenios { background-image: url(../img/ses-1-mobile-2.webp); padding-bottom: 250px; }
+  .hero-contato { background-image: url(../img/ses-1-mobile-2.webp); padding-bottom: 250px; }
   .home-beneficios::before { background-image: url(../img/bg-768x512.webp); }
   .hero-inner { align-items: stretch; }
   .hero-text, .hero-sobre .hero-text, .hero-planos .hero-text { width: 100%; margin-top: 60px; text-align: left; }

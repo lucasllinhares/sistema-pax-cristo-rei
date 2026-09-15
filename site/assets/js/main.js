@@ -4,12 +4,17 @@
 
   /* ------------------------------------------------------------------
      Configuração do formulário de contato.
-     - formEndpoint vazio: a mensagem é aberta no WhatsApp (whatsappNumber).
-     - Para receber por e-mail, informe um endpoint que aceite POST JSON,
-       ex.: 'https://formsubmit.co/ajax/seu-email@dominio.com.br'
+     Todo envio do formulário de /contato/ vai para o e-mail abaixo, via
+     FormSubmit (serviço gratuito de encaminhamento — não guarda nada aqui,
+     só repassa para a caixa de entrada). Na primeira mensagem recebida,
+     o FormSubmit manda um e-mail de confirmação para esse endereço; é
+     preciso abrir esse e-mail e clicar no link uma única vez para ativar
+     — depois disso todo envio cai direto na caixa de entrada.
+     Para trocar o e-mail de destino ou voltar a abrir o WhatsApp em vez
+     de enviar e-mail, edite/esvazie formEndpoint abaixo.
      ------------------------------------------------------------------ */
   var CONFIG = {
-    formEndpoint: '',
+    formEndpoint: 'https://formsubmit.co/ajax/contato@sistemapaxcristorei.com.br',
     whatsappNumber: '554236272673'
   };
 
@@ -96,8 +101,10 @@
           var altura = document.documentElement.scrollHeight - window.innerHeight;
           barra.style.setProperty('--progresso', altura > 0 ? Math.min(y / altura, 1) : 0);
         }
-        // parallax leve: o fundo da primeira dobra anda mais devagar que a página
-        if (hero && y < window.innerHeight * 1.2) {
+        // parallax leve: o fundo da primeira dobra anda mais devagar que a página.
+        // No celular a imagem é retrato e mostra pessoas perto do topo — deslocar o
+        // fundo ao rolar cortava a cabeça delas, então lá o fundo fica parado.
+        if (hero && y < window.innerHeight * 1.2 && window.innerWidth > 767) {
           hero.style.setProperty('--parallax', Math.round(y * 0.12) + 'px');
         }
       });
@@ -350,6 +357,9 @@
   if (form) {
     var msg = form.querySelector('.form-msg');
     var submit = form.querySelector('.btn-submit');
+    // Momento em que o formulário apareceu na tela — usado para pegar robôs
+    // que preenchem e enviam tudo em menos de 3 segundos (pessoa real não consegue).
+    var abertoEm = Date.now();
 
     function showMsg(text, isError) {
       msg.textContent = text;
@@ -358,7 +368,11 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+      // Duas travas contra robôs, nenhuma delas visível para uma pessoa real:
+      // 1) campo-isca preenchido (só um robô preenche um campo escondido);
+      // 2) formulário enviado rápido demais para ter sido digitado por alguém.
       if (form._honey && form._honey.value) return;
+      if (Date.now() - abertoEm < 3000) return;
 
       var invalid = null;
       form.querySelectorAll('input:not(.hp), textarea').forEach(function (f) {
@@ -396,11 +410,16 @@
       fetch(CONFIG.formEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(Object.assign({ _subject: 'Contato pelo site - Sistema Pax Cristo Rei' }, data))
+        body: JSON.stringify(Object.assign({
+          _subject: 'Novo contato pelo site - Sistema Pax Cristo Rei',
+          _template: 'table', // e-mail recebido em formato de tabela, mais fácil de ler
+          _captcha: 'false' // o site já barra robôs com o campo-isca e o teste de tempo acima
+        }, data))
       }).then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
         showMsg('A mensagem foi enviada com sucesso.');
         form.reset();
+        abertoEm = Date.now();
       }).catch(function () {
         showMsg('Ocorreu um erro ao enviar. Tente novamente ou fale conosco pelo WhatsApp.', true);
       }).then(function () { submit.disabled = false; });

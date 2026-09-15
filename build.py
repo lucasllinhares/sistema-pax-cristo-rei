@@ -8,6 +8,7 @@
 - Blocos reutilizáveis ({{testimonials}}, {{cta}}, ...) ficam em PARTIALS abaixo.
 Os arquivos em site/assets (css, js, imagens, fontes) são editados diretamente.
 """
+import hashlib
 import json
 import os
 import re
@@ -15,6 +16,16 @@ import re
 HERE = os.path.dirname(os.path.abspath(__file__))
 SRC = os.path.join(HERE, 'src')
 OUT = os.path.join(HERE, 'site')
+
+
+def asset_version(rel_path):
+    """8 caracteres do hash do conteúdo do arquivo — vira ?v=... no link/script.
+    Muda sozinho sempre que o CSS/JS muda, então o navegador (e o cache da
+    Vercel) busca a versão nova na hora, em vez de ficar preso numa cópia
+    antiga guardada em cache."""
+    caminho = os.path.join(OUT, rel_path)
+    conteudo = open(caminho, 'rb').read()
+    return hashlib.sha1(conteudo).hexdigest()[:8]
 
 SITE_URL = 'https://sistemapaxcristorei.com.br/'
 WHATSAPP = ('https://wa.me/554236272673?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20'
@@ -90,6 +101,8 @@ def render(tpl, ctx):
 
 def build():
     layout = open(os.path.join(SRC, 'layout.html'), encoding='utf-8').read()
+    css_v = asset_version('assets/css/style.css')
+    js_v = asset_version('assets/js/main.js')
     pages_dir = os.path.join(SRC, 'pages')
     for fname in sorted(os.listdir(pages_dir)):
         if not fname.endswith('.html'):
@@ -105,7 +118,7 @@ def build():
 
         ctx = dict(PARTIALS)
         ctx.update(meta)
-        ctx.update(slug=slug, root=root, site_url=SITE_URL, whatsapp=WHATSAPP)
+        ctx.update(slug=slug, root=root, site_url=SITE_URL, whatsapp=WHATSAPP, css_v=css_v, js_v=js_v)
         for item in NAV:
             ctx[f'active_{item}'] = ' class="active" aria-current="page"' if slug == item else ''
 
