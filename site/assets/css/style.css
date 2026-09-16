@@ -258,18 +258,22 @@ body::-webkit-scrollbar-thumb { background-color: #10873F; border-radius: 10px; 
 .t-name { font-weight: 700; color: var(--text); letter-spacing: .5px; }
 .t-title { font-weight: 400; color: var(--primary); }
 .carousel-btn {
-  position: absolute; top: calc(50% - 15px); transform: translateY(-50%); z-index: 2;
-  display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px;
+  position: absolute; top: calc(50% - 22px); transform: translateY(-50%); z-index: 2;
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px;
   padding: 0; background: none; border: 0; cursor: pointer; color: var(--text);
 }
 .carousel-btn svg { width: 20px; height: 20px; fill: var(--text); }
 .carousel-prev { left: 0; }
 .carousel-next { right: 0; }
-.carousel-dots { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 10px; }
+.carousel-dots { position: absolute; bottom: 0; left: 0; right: 0; display: flex; justify-content: center; gap: 4px; }
 .carousel-dots button {
-  width: 6px; height: 6px; padding: 0; border: 0; border-radius: 50%; background: #000; opacity: .2; cursor: pointer; transition: opacity .3s;
+  position: relative; width: 24px; height: 24px; padding: 0; border: 0; background: none; cursor: pointer;
 }
-.carousel-dots button[aria-selected="true"] { opacity: 1; }
+.carousel-dots button::before {
+  content: ''; position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; border-radius: 50%;
+  background: #000; opacity: .2; transform: translate(-50%, -50%); transition: opacity .3s;
+}
+.carousel-dots button[aria-selected="true"]::before { opacity: 1; }
 
 /* ---------- Faixa CTA laranja ---------- */
 .cta-sec { padding: 90px 0; }

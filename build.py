@@ -95,6 +95,35 @@ PARTIALS = {
 
 NAV = ['planos', 'sobre', 'convenios', 'depoimentos', 'contato']
 
+# Cada página com hero usa uma imagem de fundo (CSS background-image) diferente por
+# faixa de largura. Um <link rel=preload> por faixa evita que o navegador só descubra
+# essa imagem depois de baixar e processar todo o CSS — é o maior ganho possível no LCP
+# (Largest Contentful Paint), já que essa imagem cobre a primeira dobra da página.
+# As faixas espelham exatamente as media queries de .hero-* em assets/css/style.css.
+HERO_IMAGES = {
+    'home': ['ses-1-desktop-1.webp', 'ses-1-desktop-1-1536x562.webp', 'ses-1-desktop-1-1024x375.webp', 'ses-1-tablet.webp', 'ses-1-mobile.webp'],
+    'planos': ['ses-1-desktop.webp', 'ses-1-desktop-1536x562.webp', 'ses-1-desktop-1024x375.webp', 'ses-1-tablet-1.webp', 'ses-1-mobile-1.webp'],
+    'sobre': ['ses-1-desktop-4.webp', 'ses-1-desktop-4-1536x562.webp', 'ses-1-desktop-4-1024x375.webp', 'ses-1-tablet-3.webp', 'ses-1-mobile-3.webp'],
+    'contato': ['ses-1-desktop-3.webp', 'ses-1-desktop-3-1536x535.webp', 'ses-1-desktop-3-1024x356.webp', 'ses-1-tablet-2-768x932.webp', 'ses-1-mobile-2.webp'],
+}
+# (min-width, max-width) de cada uma das 5 imagens acima, sem sobreposição -
+# exatamente o breakpoint que "vence" a cascata do CSS em cada faixa.
+HERO_RANGES = [(1367, None), (1201, 1366), (1025, 1200), (768, 1024), (None, 767)]
+
+
+def hero_preload_html(hero_key, root):
+    if not hero_key:
+        return ''
+    files = HERO_IMAGES[hero_key]
+    links = []
+    for fname, (min_w, max_w) in zip(files, HERO_RANGES):
+        conds = []
+        if min_w: conds.append(f'(min-width: {min_w}px)')
+        if max_w: conds.append(f'(max-width: {max_w}px)')
+        media = ' and '.join(conds)
+        links.append(f'  <link rel="preload" as="image" href="{root}assets/img/{fname}" media="{media}" fetchpriority="high">')
+    return '\n'.join(links)
+
 
 def render(tpl, ctx):
     return re.sub(r'\{\{(\w+)\}\}', lambda m: str(ctx.get(m.group(1), m.group(0))), tpl)
@@ -124,6 +153,7 @@ def build():
         ctx.update(meta)
         ctx.update(slug=slug, root=root, site_url=SITE_URL, whatsapp=WHATSAPP,
                    css_v=css_v, js_v=js_v, anim_v=anim_v, gtm_v=gtm_v)
+        ctx['hero_preload'] = hero_preload_html(meta.get('hero'), root)
         for item in NAV:
             ctx[f'active_{item}'] = ' class="active" aria-current="page"' if slug == item else ''
 
