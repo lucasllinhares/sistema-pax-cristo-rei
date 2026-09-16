@@ -8,6 +8,7 @@
 - Blocos reutilizáveis ({{testimonials}}, {{cta}}, ...) ficam em PARTIALS abaixo.
 Os arquivos em site/assets (css, js, imagens, fontes) são editados diretamente.
 """
+import datetime
 import hashlib
 import json
 import os
@@ -103,7 +104,10 @@ def build():
     layout = open(os.path.join(SRC, 'layout.html'), encoding='utf-8').read()
     css_v = asset_version('assets/css/style.css')
     js_v = asset_version('assets/js/main.js')
+    anim_v = asset_version('assets/js/anim-init.js')
+    gtm_v = asset_version('assets/js/gtm-init.js')
     pages_dir = os.path.join(SRC, 'pages')
+    page_paths = []
     for fname in sorted(os.listdir(pages_dir)):
         if not fname.endswith('.html'):
             continue
@@ -118,7 +122,8 @@ def build():
 
         ctx = dict(PARTIALS)
         ctx.update(meta)
-        ctx.update(slug=slug, root=root, site_url=SITE_URL, whatsapp=WHATSAPP, css_v=css_v, js_v=js_v)
+        ctx.update(slug=slug, root=root, site_url=SITE_URL, whatsapp=WHATSAPP,
+                   css_v=css_v, js_v=js_v, anim_v=anim_v, gtm_v=gtm_v)
         for item in NAV:
             ctx[f'active_{item}'] = ' class="active" aria-current="page"' if slug == item else ''
 
@@ -133,6 +138,34 @@ def build():
             f.write(html)
         leftover = re.findall(r'\{\{\w+\}\}', html)
         print(f'{slug:40s} -> site/{path}index.html' + (f'  !! placeholders: {leftover}' if leftover else ''))
+        page_paths.append(path)
+
+    write_robots()
+    write_sitemap(page_paths)
+
+
+def write_robots():
+    content = f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}sitemap.xml\n'
+    with open(os.path.join(OUT, 'robots.txt'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(content)
+    print(f'{"robots.txt":40s} -> site/robots.txt')
+
+
+def write_sitemap(page_paths):
+    today = datetime.date.today().isoformat()
+    urls = []
+    for path in sorted(page_paths, key=lambda p: (p != '', p)):
+        priority = '1.0' if path == '' else '0.7'
+        urls.append(
+            f'  <url>\n    <loc>{SITE_URL}{path}</loc>\n'
+            f'    <lastmod>{today}</lastmod>\n    <priority>{priority}</priority>\n  </url>'
+        )
+    xml = ('<?xml version="1.0" encoding="UTF-8"?>\n'
+           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+           + '\n'.join(urls) + '\n</urlset>\n')
+    with open(os.path.join(OUT, 'sitemap.xml'), 'w', encoding='utf-8', newline='\n') as f:
+        f.write(xml)
+    print(f'{"sitemap.xml":40s} -> site/sitemap.xml')
 
 
 if __name__ == '__main__':

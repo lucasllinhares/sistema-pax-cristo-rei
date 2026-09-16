@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sistemapaxcristorei.com.br/sitemap.xml

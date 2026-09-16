@@ -36,6 +36,8 @@
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
+.gtm-noscript-frame { display: none; visibility: hidden; }
+.svg-sprite-defs { position: absolute; }
 html, body { width: 100%; overflow-x: hidden; }
 html { -webkit-text-size-adjust: 100%; }
 body {
